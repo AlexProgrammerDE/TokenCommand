@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 public class MainCommand implements CommandExecutor, TabExecutor {
@@ -65,6 +66,6 @@ public class MainCommand implements CommandExecutor, TabExecutor {
     }
 
     private String generateToken() {
-        return DigestUtils.sha1Hex(String.valueOf(System.currentTimeMillis())).substring(0, 6);
+        return DigestUtils.sha1Hex(String.valueOf(System.currentTimeMillis())).substring(0, 6).toUpperCase();
     }
 }
