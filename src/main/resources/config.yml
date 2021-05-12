@@ -1,0 +1,5 @@
+username: "replaceme"
+password: "replaceme"
+database: "replaceme"
+hostandport: "localhost:3306"
+table: "tokens"

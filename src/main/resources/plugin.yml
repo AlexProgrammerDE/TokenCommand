@@ -1,0 +1,14 @@
+name: TokenCommand
+version: ${project.version}
+main: net.pistonmaster.tokencommand.TokenCommand
+api-version: 1.16
+description: Generates a token and puts it into a mysql database.
+
+permissions:
+  tokencommand.use:
+    default: true
+
+commands:
+  token:
+    description: Generates user token.
+    permission: tokencommand.use
