@@ -20,7 +20,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @RequiredArgsConstructor
 public class MainCommand implements CommandExecutor, TabExecutor {
@@ -33,6 +32,18 @@ public class MainCommand implements CommandExecutor, TabExecutor {
 
             try {
                 try (Statement statement = plugin.getDb().getConnection().createStatement()) {
+                    ResultSet ipResult = statement.executeQuery("SELECT username, ip FROM " + plugin.getConfig().getString("iptable") + ";");
+
+                    while (ipResult.next()) {
+                        if (ipResult.getString("ip").equals(player.getAddress().getAddress().toString())) {
+                            String username = ipResult.getString("username");
+                            player.sendMessage(TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("iplimitmessage").replace("%player%", username))));
+                            return true;
+                        }
+                    }
+
+                    statement.executeUpdate("INSERT INTO " + plugin.getConfig().getString("iptable") + " (username, ip) VALUES ('" + player.getName() + "', '" + player.getAddress().getAddress().toString() + "');");
+
                     ResultSet result = statement.executeQuery("SELECT username, token FROM " + plugin.getConfig().getString("table") + ";");
 
                     while (result.next()) {
